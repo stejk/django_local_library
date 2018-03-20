@@ -107,4 +107,4 @@ ENV/
 *.sqlite3
 
 # Visual Studio config files
-.vscode*
+.vscode/
