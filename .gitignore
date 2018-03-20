@@ -99,3 +99,12 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Text backup files
+*.bak
+
+# Database
+*.sqlite3
+
+# Visual Studio config files
+.vscode*

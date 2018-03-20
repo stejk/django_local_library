@@ -1,0 +1,6 @@
+{
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintArgs": ["--load-plugins", "pylint_django"],
+    "python.pythonPath": "C:\\Users\\mhartl\\envs\\my_django_env\\Scripts\\python.exe"
+}
