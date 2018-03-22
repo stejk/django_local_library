@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'in)q_rcs3ap%uf(y@#&x#x2o47#o+9u4iav7(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG',  True)
 
-ALLOWED_HOSTS = ['stejks-local-library.herokuapp.com']
+ALLOWED_HOSTS = ['stejks-local-library.herokuapp.com', 'localhost']
 
 
 # Application definition

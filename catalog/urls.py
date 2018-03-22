@@ -16,4 +16,7 @@ urlpatterns = [
     path('book/create/', views.BookCreate.as_view(), name='book_create'),
     path('book/<int:pk>/update/', views.BookUpdate.as_view(), name='book_update'),
     path('book/<int:pk>/delete/', views.BookDelete.as_view(), name='book_delete'),
+    path('register/', views.register_user, name='register-user'),
+    path('register/confirm/', views.register_confirm, name='register-confrim'),
+    path('register/confirm/<uuid:pk>', views.confirm_registration, name='confirm_registration'),
 ]

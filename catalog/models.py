@@ -85,3 +85,7 @@ class Language(models.Model):
 
     def __str__(self):
         return self.name
+
+class UserActivation(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    activation_code = models.UUIDField(primary_key=True, default=uuid.uuid4)

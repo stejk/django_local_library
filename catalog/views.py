@@ -1,13 +1,15 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import permission_required, login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User, Group
 import datetime
 
-from .models import Book, Author, BookInstance, Genre
-from .forms import RenewBookForm
+from .models import Book, Author, BookInstance, Genre, UserActivation
+from .forms import RenewBookForm, UserCreationFormExtended
 
 def index(request):
     word = "Warcraft"
@@ -35,6 +37,43 @@ def index(request):
             'num_visits': num_visits
         },
     )
+
+def register_user(request):
+    if request.method == 'POST':
+        context = {}
+        form = UserCreationFormExtended(request.POST)
+        if form.is_valid():
+            user = form.save()
+            if user.email.endswith('@lib.com'):
+                # TODO: prepsat, tohle je hnus
+                user.groups.add(Group.objects.filter(name='Librarians')[0].id)
+            
+            user.is_active = False
+            user.save()
+
+            ua = UserActivation.objects.create(user=user)
+        
+            context = {'activation_code' : ua.activation_code}
+            
+            return render(request, 'users/user_register_done.html', context=context)
+
+        return HttpResponse('Registration failed! Did you try SQLi? Shame on you!')
+
+    else:
+        form = UserCreationFormExtended()
+    
+    return render(request, 'users/user_register.html', context={'form': form})
+
+def confirm_registration(request, pk):
+    activation = get_object_or_404(UserActivation, pk=pk)
+    user = activation.user
+    user.is_active = True
+    user.save()
+
+    return HttpResponseRedirect(reverse('login'))
+    
+def register_confirm(request):
+    return HttpResponse('cool')
 
 class BookListView(generic.ListView):
     model = Book

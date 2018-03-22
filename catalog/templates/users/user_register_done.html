@@ -1,0 +1,7 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<p>PRETEND THIS IS AN EMAIL: User was succesfully registered, visit <a href='{% url 'confirm_registration' activation_code %}'>activation link</a></p>
+
+{% endblock %}
